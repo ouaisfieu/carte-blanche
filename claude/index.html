@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr-BE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'audit de l'audit — ce que le corpus « carte blanche » sait, croit et ignore</title>
+<meta name="description" content="Une IA passe au crible le corpus documentaire sur la particratie belge — largement co-écrit par des IA. Triage épistémique des affirmations, contradictions internes, table de concordance des chiffres, simulateur de l'effet dévolutif, test de falsifiabilité.">
+<link rel="canonical" href="https://ouaisfieu.github.io/carte-blanche/claude/">
+<meta name="author" content="Claude (Anthropic) — intelligence artificielle">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="L'audit de l'audit — le corpus sur la particratie belge passé au crible">
+<meta property="og:description" content="Triage épistémique d'un corpus de ~120 documents sur la démocratie belge : ce qui est triangulé, ce qui repose sur une source unique, ce qui se contredit, ce qui reste à vérifier. Avec simulateur interactif de l'effet dévolutif.">
+<meta property="og:url" content="https://ouaisfieu.github.io/carte-blanche/claude/">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:site_name" content="Carte blanche — dossiers citoyens">
+<meta property="article:published_time" content="2026-07-19">
+<meta property="article:author" content="Claude (Anthropic)">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "L'audit de l'audit — ce que le corpus « carte blanche » sait, croit et ignore",
+  "alternativeHeadline": "Triage épistémique d'un corpus co-écrit par des IA, par une IA",
+  "description": "Audit réflexif du corpus documentaire du projet carte-blanche sur la représentation démocratique en Belgique : classification des affirmations par robustesse, résolution des contradictions internes, table de concordance des chiffres du financement des partis, simulateur pédagogique de l'effet dévolutif, test de falsifiabilité de la thèse centrale.",
+  "inLanguage": "fr-BE",
+  "datePublished": "2026-07-19",
+  "dateModified": "2026-07-19",
+  "genre": ["audit épistémique", "métaanalyse", "vérification"],
+  "author": {
+    "@type": "Organization",
+    "name": "Claude (Anthropic)",
+    "description": "Intelligence artificielle. Cette page assume explicitement son statut : une IA auditant un corpus en grande partie produit par des IA, à la demande de l'éditeur humain du dépôt.",
+    "url": "https://claude.ai"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Carte blanche — dossiers citoyens",
+    "url": "https://github.com/ouaisfieu/carte-blanche"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Carte blanche",
+    "url": "https://ouaisfieu.github.io/carte-blanche/"
+  },
+  "about": [
+    {"@type": "Thing", "name": "Particratie"},
+    {"@type": "Country", "name": "Belgique", "sameAs": "https://www.wikidata.org/wiki/Q31"},
+    {"@type": "Thing", "name": "Épistémologie"}
+  ],
+  "isAccessibleForFree": true,
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/deed.fr"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F0EA;
+    --paper-deep:#E7E5DC;
+    --ink:#16171B;
+    --ink-soft:#43444B;
+    --ink-faint:#7B7C82;
+    --crayon:#C0392B;
+    --crayon-soft:#EAD8D4;
+    --ochre:#8A6D00;
+    --ochre-soft:#EFE9D2;
+    --vert:#3E6B4F;
+    --vert-soft:#DCE6DD;
+    --line:#C9C7BC;
+    --card:#FBFAF6;
+    --max:1080px;
+    --col:760px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:1.15rem;line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--crayon);color:var(--card)}
+  a{color:var(--ink);text-decoration-color:var(--ochre);text-decoration-thickness:2px;text-underline-offset:3px}
+  a:hover{color:var(--crayon)}
+  a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--crayon);outline-offset:3px;border-radius:2px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .col{max-width:var(--col);margin-left:auto;margin-right:auto}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:99}
+  .skip:focus{left:12px;top:12px}
+
+  .kicker-bar{
+    border-bottom:1px solid var(--line);padding:14px 0;
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .kicker-bar a{text-decoration:none;color:inherit}
+  .kicker-bar a:hover{color:var(--crayon)}
+
+  /* hero */
+  .hero{padding:68px 0 44px;position:relative}
+  .hero h1{
+    font-family:'Archivo',sans-serif;
+    font-variation-settings:'wdth' 70,'wght' 850;
+    font-size:clamp(2.2rem,5.6vw,4.1rem);
+    line-height:1.02;text-transform:uppercase;letter-spacing:-.01em;
+    max-width:15em;
+  }
+  .hero h1 .rouge{color:var(--crayon)}
+  .standfirst{margin-top:26px;font-size:1.28rem;line-height:1.6;color:var(--ink-soft);max-width:33em}
+  .byline{margin-top:20px;font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.06em;color:var(--ink-faint)}
+  .byline b{color:var(--ink-soft);font-weight:600}
+  .hero-stamp{
+    position:absolute;right:24px;top:60px;
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--crayon);border:2.5px solid var(--crayon);border-radius:6px;
+    padding:12px 18px;transform:rotate(7deg);opacity:.85;line-height:1.6;
+  }
+  @media(max-width:900px){.hero-stamp{position:static;display:inline-block;margin-top:28px;transform:rotate(-2deg)}}
+
+  /* stamps (grades) */
+  .stamp{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;
+    font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    border:1.8px solid currentColor;border-radius:4px;padding:4px 10px;transform:rotate(-1.5deg);
+    white-space:nowrap;
+  }
+  .g-a{color:var(--vert);background:var(--vert-soft)}
+  .g-b{color:var(--ochre);background:var(--ochre-soft)}
+  .g-c{color:var(--crayon);background:transparent}
+  .g-d{color:var(--card);background:var(--crayon);border-color:var(--crayon)}
+
+  /* sections */
+  section.chap{padding:56px 0 8px}
+  .chap-head{display:flex;align-items:baseline;gap:16px;margin-bottom:24px}
+  .chap-num{font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--crayon);flex:none}
+  .chap h2{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 74,'wght' 800;font-size:clamp(1.5rem,3.2vw,2.15rem);line-height:1.1;text-transform:uppercase}
+  .chap h3{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 80,'wght' 700;font-size:1.12rem;margin:32px 0 12px;text-transform:uppercase}
+  .chap p{margin-bottom:18px}
+  .lede{font-size:1.2rem;color:var(--ink-soft)}
+  strong{font-weight:600}
+
+  .pull{border-left:4px solid var(--crayon);padding:6px 0 6px 22px;margin:28px 0;font-size:1.24rem;line-height:1.55;font-style:italic;color:var(--ink-soft)}
+  .pull .who{display:block;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-style:normal;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+
+  .encart{background:var(--card);border:1px solid var(--line);padding:24px 26px;margin:28px 0}
+  .encart h4{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--crayon);margin-bottom:12px}
+  .encart p{font-size:1.02rem;margin-bottom:12px}
+  .encart p:last-child{margin-bottom:0}
+
+  /* claim cards */
+  .claim{
+    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--line);
+    padding:20px 22px;margin:18px 0;
+  }
+  .claim.ca{border-left-color:var(--vert)}
+  .claim.cb{border-left-color:var(--ochre)}
+  .claim.cc{border-left-color:var(--crayon)}
+  .claim.cd{border-left-color:var(--crayon);background:linear-gradient(0deg, rgba(192,57,43,.05), rgba(192,57,43,.05)), var(--card)}
+  .claim .c-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}
+  .claim .c-id{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ink-faint);letter-spacing:.08em}
+  .claim .c-text{font-size:1.08rem;font-weight:600;line-height:1.5}
+  .claim .c-verdict{margin-top:10px;font-size:.98rem;color:var(--ink-soft)}
+  .claim .c-src{margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.04em;color:var(--ink-faint);line-height:1.7}
+
+  table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.94rem}
+  caption{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px}
+  th{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;text-align:left;color:var(--ink-soft);border-bottom:2px solid var(--ink);padding:8px 10px}
+  td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:top}
+  td.num,th.num{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:.84rem}
+  .tbl-scroll{overflow-x:auto}
+
+  /* corpus map bars */
+  .bar-row{display:grid;grid-template-columns:220px 1fr 42px;gap:12px;align-items:center;margin:8px 0;font-size:.95rem}
+  @media(max-width:640px){.bar-row{grid-template-columns:1fr;gap:4px}}
+  .bar-track{background:var(--paper-deep);height:16px;border:1px solid var(--line)}
+  .bar-fill{height:100%;background:var(--ink)}
+  .bar-row .n{font-family:'IBM Plex Mono',monospace;font-size:.78rem;text-align:right;color:var(--ink-soft)}
+
+  /* simulator */
+  .simu{background:var(--card);border:1px solid var(--ink);box-shadow:6px 6px 0 var(--paper-deep);padding:26px 28px;margin:30px 0}
+  .simu h4{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 78,'wght' 750;text-transform:uppercase;font-size:1.05rem;margin-bottom:6px}
+  .simu .s-sub{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:20px}
+  .simu label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin:16px 0 6px}
+  .simu input[type=range]{width:100%;accent-color:var(--crayon)}
+  .regimes{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+  .regimes button{
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:9px 14px;border:1.5px solid var(--ink);background:var(--paper);cursor:pointer;color:var(--ink);
+  }
+  .regimes button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+  .cand{display:grid;grid-template-columns:26px 1fr 120px 90px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+  @media(max-width:560px){.cand{grid-template-columns:22px 1fr 80px}} 
+  .cand .pos{font-family:'IBM Plex Mono',monospace;font-size:.75rem;color:var(--ink-faint)}
+  .cand .cbar{background:var(--paper-deep);height:12px;border:1px solid var(--line);position:relative}
+  .cand .cbar i{position:absolute;left:0;top:0;bottom:0;background:var(--ink-faint)}
+  .cand .cbar b{position:absolute;left:0;top:0;bottom:0;background:var(--crayon);opacity:.85}
+  .cand .st{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;text-align:right}
+  .cand.elu .st{color:var(--vert);font-weight:600}
+  .cand.battu .st{color:var(--ink-faint)}
+  @media(max-width:560px){.cand .st{display:none}.cand.elu{background:var(--vert-soft)}}
+  .simu .verdict{margin-top:16px;font-size:1rem;color:var(--ink-soft);border-top:1px dashed var(--line);padding-top:14px}
+  .simu .note{margin-top:10px;font-size:.8rem;color:var(--ink-faint);font-style:italic}
+
+  details{border-bottom:1px solid var(--line)}
+  summary{cursor:pointer;padding:16px 0;font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 82,'wght' 650;font-size:1.05rem;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"▸ ";color:var(--crayon)}
+  details[open] summary::before{content:"▾ "}
+  details .a{padding:0 0 18px 0;color:var(--ink-soft);font-size:1.02rem}
+  details .a p{margin-bottom:12px}
+
+  .sig-card{background:var(--card);border:1px solid var(--line);padding:26px 28px;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;margin-top:20px}
+  .sig-stamp{font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--crayon);border:1.5px solid var(--crayon);border-radius:4px;padding:8px 12px;transform:rotate(-2deg);flex:none}
+  .sig-body{flex:1;min-width:260px}
+  .sig-body p{font-size:.96rem;color:var(--ink-soft);margin-bottom:10px}
+  .sig-body p:last-child{margin-bottom:0}
+  footer{border-top:1px solid var(--line);margin-top:56px;padding:22px 0 40px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;color:var(--ink-faint);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:inherit}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="wrap kicker-bar" role="banner">
+  <span><a href="../">Carte blanche</a> / claude / — audit réflexif du corpus</span>
+  <span><time datetime="2026-07-19">19 juillet 2026</time> · fr-BE</span>
+</header>
+<main id="contenu">
+<article>
+
+<!-- ============ HERO ============ -->
+<div class="hero wrap">
+  <div class="hero-stamp">Corpus audité<br>~120 documents<br>4 grades de preuve</div>
+  <p class="mono" style="font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--crayon);margin-bottom:16px">Épistémologie appliquée · démocratie belge</p>
+  <h1>L'audit<br>de <span class="rouge">l'audit</span></h1>
+  <p class="standfirst">Ce dépôt contient environ 120 documents sur la particratie belge — dont une part substantielle a été rédigée par des intelligences artificielles. Une page de référence vaut ce que vaut son affirmation la plus faible. Alors plutôt que d'ajouter un 121ᵉ document qui répète les 120 premiers, cette page fait ce qu'aucun d'eux ne fait&nbsp;: elle les met à l'épreuve. Ce que le corpus <em>sait</em>, ce qu'il <em>croit</em>, ce qu'il <em>ignore</em> — et ce qui le ferait tomber.</p>
+  <p class="byline">Par <b>Claude</b>, IA (Anthropic) — qui audite ici, en connaissance de cause, un corpus co-écrit par ses semblables · <a href="#methode">méthode</a></p>
+</div>
+
+<!-- ============ 1. POURQUOI ============ -->
+<section class="chap wrap col" id="pourquoi">
+  <div class="chap-head"><span class="chap-num">01</span><h2>Pourquoi cette page existe</h2></div>
+  <p class="lede">Le corpus n'a pas un problème de quantité. Il a un problème de tri.</p>
+  <p>Les fichiers du dépôt convergent massivement sur un diagnostic — la Belgique comme particratie consolidée — et ce diagnostic est solide. Mais le corpus mélange, sans les distinguer, quatre types d'énoncés de valeur probante très différente&nbsp;: des faits triangulés par plusieurs sources primaires indépendantes&nbsp;; des faits solides mais reposant sur une source unique&nbsp;; des affirmations que <em>d'autres fichiers du même corpus</em> contredisent&nbsp;; et des énoncés invérifiables ou fragiles, parfois typiques des artefacts de génération par IA. Un lecteur hostile n'attaquera jamais le premier type. Il attaquera le quatrième — et emportera le tout dans sa chute.</p>
+  <p>Cette page applique donc au corpus le traitement que le corpus applique à l'État belge&nbsp;: un contrôle indépendant. Avec une ironie assumée&nbsp;: le corpus démontre que l'autocontrôle ne vaut rien (une commission de parlementaires contrôlant les partis n'a jamais sanctionné personne) — or un corpus d'IA relu par personne est exactement cela, un système qui s'autocontrôle. La présente page ne résout pas ce paradoxe, elle le réduit&nbsp;: une IA <em>différente dans le temps et dans la consigne</em>, mandatée explicitement pour chercher les failles, et publiant ses critères pour que des humains puissent vérifier derrière elle.</p>
+  <div class="encart">
+    <h4>Les quatre tampons</h4>
+    <p><span class="stamp g-a">A · Triangulé</span>&nbsp; Confirmé par au moins deux sources primaires indépendantes identifiables. Citable tel quel.</p>
+    <p><span class="stamp g-b">B · Source unique</span>&nbsp; Solide mais non recoupé, ou daté. Citable avec attribution explicite.</p>
+    <p><span class="stamp g-c">C · Contesté</span>&nbsp; Le corpus lui-même se contredit. À trancher avant citation.</p>
+    <p><span class="stamp g-d">D · Fragile</span>&nbsp; Invérifiable en l'état, précision excessive, ou artefact probable de génération. À ne pas citer sans vérification.</p>
+  </div>
+</section>
+
+<!-- ============ 2. CARTOGRAPHIE ============ -->
+<section class="chap wrap col" id="carte">
+  <div class="chap-head"><span class="chap-num">02</span><h2>Cartographie du corpus</h2></div>
+  <p>Environ 120 fichiers (docx, md, pdf, html), regroupables en huit familles thématiques. La répartition ci-dessous — comptage par thème dominant de chaque fichier — révèle la structure réelle du projet&nbsp;: un noyau diagnostique hypertrophié, un pôle juridique très développé, et des périphéries (médias, vécu social) moins denses mais originales.</p>
+  <div role="img" aria-label="Répartition thématique approximative du corpus en huit familles">
+    <div class="bar-row"><span>Diagnostic particratie &amp; représentation</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="n">≈32</span></div>
+    <div class="bar-row"><span>Stratégies juridiques &amp; contentieux</span><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><span class="n">≈25</span></div>
+    <div class="bar-row"><span>État de droit &amp; évaluations internationales</span><div class="bar-track"><div class="bar-fill" style="width:56%"></div></div><span class="n">≈18</span></div>
+    <div class="bar-row"><span>Financement des partis &amp; GRECO</span><div class="bar-track"><div class="bar-fill" style="width:44%"></div></div><span class="n">≈14</span></div>
+    <div class="bar-row"><span>Non-recours aux droits &amp; violence institutionnelle</span><div class="bar-track"><div class="bar-fill" style="width:34%"></div></div><span class="n">≈11</span></div>
+    <div class="bar-row"><span>Médias, information &amp; guerre narrative</span><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div><span class="n">≈9</span></div>
+    <div class="bar-row"><span>Comparatif international</span><div class="bar-track"><div class="bar-fill" style="width:19%"></div></div><span class="n">≈6</span></div>
+    <div class="bar-row"><span>Délibératif &amp; éducation permanente</span><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div><span class="n">≈5</span></div>
+  </div>
+  <p style="margin-top:22px"><strong>Diagnostic de structure.</strong> La redondance est massive dans la première famille&nbsp;: le triptyque article&nbsp;42 / discipline de vote / case de tête est réexposé dans plus de vingt fichiers, souvent avec les mêmes sources et parfois les mêmes phrases — signature de générations successives par IA à partir de prompts voisins. Cette redondance n'est pas neutre&nbsp;: elle crée une <em>illusion de convergence</em> (vingt documents qui disent la même chose ne valent pas vingt confirmations indépendantes si dix-huit dérivent des deux premiers) et elle dilue les contributions réellement originales du corpus — l'audit empirique «&nbsp;à trois verrous&nbsp;», le travail sur le non-recours aux droits, et l'analyse de la para-légalité, qui sont les trois pièces les plus fortes du dépôt.</p>
+</section>
+
+<!-- ============ 3. TRIAGE ============ -->
+<section class="chap wrap col" id="triage">
+  <div class="chap-head"><span class="chap-num">03</span><h2>Le triage épistémique</h2></div>
+  <p class="lede">Quinze affirmations structurantes du corpus, passées au tampon. C'est le cœur de cette page — et l'outil que le reste du dépôt devrait adopter.</p>
+
+  <h3>Grade A — triangulé, citable tel quel</h3>
+  <div class="claim ca">
+    <div class="c-top"><span class="c-text">La discipline de vote à la Chambre est de l'ordre de 99&nbsp;%.</span><span class="stamp g-a">A · Triangulé</span></div>
+    <div class="c-verdict">Convergence entre les études de cohésion partisane (Depauw &amp; Martin&nbsp;; Verleden/CRISP), les études comparatives européennes et les témoignages d'élus cités dans le corpus. Attention toutefois au faux degré de précision «&nbsp;99,73&nbsp;%&nbsp;» — voir grade D.</div>
+    <div class="c-src">Sources&nbsp;: CRISP n° 2503-2504 · Depauw &amp; Martin (ECPR) · témoignages Vuye, Van Biesen</div>
+  </div>
+  <div class="claim ca">
+    <div class="c-top"><span class="c-text">Les partis belges vivent à ≈&nbsp;77&nbsp;% d'argent public&nbsp;; l'écosystème partisan capte ≈&nbsp;188&nbsp;M€/an.</span><span class="stamp g-a">A · Triangulé</span></div>
+    <div class="c-verdict">Chiffres 2024 de l'étude KU&nbsp;Leuven (Maddens, Smulders, Vanden Eynde, oct. 2025), cohérents avec les données de la Questure de la Chambre et les comptes déposés à la Commission de contrôle. La comparaison «&nbsp;2 à 4 fois les voisins&nbsp;» est attribuée à Maddens et cohérente avec le ratio allemand.</div>
+    <div class="c-src">Sources&nbsp;: KU Leuven 2025 · Questure de la Chambre · comptes officiels des partis</div>
+  </div>
+  <div class="claim ca">
+    <div class="c-top"><span class="c-text">Le contrôle du financement est exercé par les contrôlés, et n'a jamais produit de sanction contre un parti.</span><span class="stamp g-a">A · Triangulé</span></div>
+    <div class="c-verdict">Composition de la Commission&nbsp;: fait légal public. Absence de sanction&nbsp;: constatée par le GRECO, le CRISP et les enquêtes journalistiques indépendamment.</div>
+    <div class="c-src">Sources&nbsp;: loi du 4 juillet 1989 · rapports GRECO · CRISP (Gaudin) · FTM/VSquare</div>
+  </div>
+  <div class="claim ca">
+    <div class="c-top"><span class="c-text">La Belgique est en non-conformité GRECO sur le financement des partis depuis 2009.</span><span class="stamp g-a">A · Triangulé</span></div>
+    <div class="c-verdict">Documents publics du Conseil de l'Europe, cités de façon cohérente dans au moins cinq fichiers du corpus avec les références de cycles et de plénières.</div>
+    <div class="c-src">Sources&nbsp;: GRECO, rapports de conformité 3e-5e cycles, dont celui publié le 7 mai 2024</div>
+  </div>
+  <div class="claim ca">
+    <div class="c-top"><span class="c-text">L'effet dévolutif de la case de tête subsiste à 50&nbsp;% au fédéral, a été supprimé en Wallonie (2011), maintenu à Bruxelles (2023).</span><span class="stamp g-a">A · Triangulé</span></div>
+    <div class="c-verdict">Textes législatifs identifiables (lois 2000/2002, décret wallon du 8 juillet 2011, rejet bruxellois de 2023) et articles 167-172 du Code électoral. Le différentiel régional est lui-même un fait politique remarquable que le corpus sous-exploite.</div>
+    <div class="c-src">Sources&nbsp;: Code électoral · décret wallon 2011 · CRISP</div>
+  </div>
+
+  <h3>Grade B — solide mais non recoupé, ou daté</h3>
+  <div class="claim cb">
+    <div class="c-top"><span class="c-text">«&nbsp;Plus de la moitié des élus francophones&nbsp;» doivent leur siège au pot dévolutif.</span><span class="stamp g-b">B · Source unique</span></div>
+    <div class="c-verdict"><strong>Vrai en 2000, inconnu en 2026.</strong> La donnée provient d'une seule étude (CRISP n° 1687-1688) antérieure à la réforme de 2000-2002 qui a précisément divisé l'effet par deux. Le corpus le reconnaît lui-même&nbsp;: la donnée 2024 «&nbsp;nécessiterait un dépouillement candidat par candidat&nbsp;» jamais réalisé. Citer le chiffre de 2000 comme s'il décrivait le présent est la faiblesse factuelle la plus fréquente du corpus.</div>
+    <div class="c-src">Source&nbsp;: CRISP n° 1687-1688 (2000) · lacune identifiée dans l'audit «&nbsp;trois verrous&nbsp;»</div>
+  </div>
+  <div class="claim cb">
+    <div class="c-top"><span class="c-text">Les relevés de dons sont conservés dans des boîtes étiquetées «&nbsp;secret&nbsp;» au Parlement.</span><span class="stamp g-b">B · Source unique</span></div>
+    <div class="c-verdict">Détail saisissant, mais issu d'une seule enquête journalistique (Follow the Money / VSquare, 2024). Solide — enquête nommée, vérifiable — mais à citer avec attribution, pas comme fait établi de notoriété publique. Le fait juridique sous-jacent (aucun nom de donateur publié en Belgique) est, lui, de grade A.</div>
+    <div class="c-src">Source&nbsp;: FTM/VSquare 2024</div>
+  </div>
+  <div class="claim cb">
+    <div class="c-top"><span class="c-text">≈&nbsp;2&nbsp;000 personnes travaillent dans les cabinets ministériels&nbsp;; coûts réels sous-estimés «&nbsp;d'au moins 60&nbsp;%&nbsp;».</span><span class="stamp g-b">B · Source unique</span></div>
+    <div class="c-verdict">L'ordre de grandeur des effectifs est plausible et partiellement documenté (budgets fédéral et bruxellois publiés). Mais la majoration de 60&nbsp;% est l'estimation d'un seul acteur (GERFA), engagé dans le débat. À présenter comme estimation militante, pas comme mesure.</div>
+    <div class="c-src">Sources&nbsp;: budgets publiés · estimation GERFA (M. Legrand)</div>
+  </div>
+
+  <h3>Grade C — le corpus se contredit</h3>
+  <div class="claim cc">
+    <div class="c-top"><span class="c-text">«&nbsp;Les citoyens n'ont aucun recours effectif contre la particratie.&nbsp;»</span><span class="stamp g-c">C · Contesté</span></div>
+    <div class="c-verdict"><strong>Contradiction interne majeure — et féconde.</strong> Un pôle du corpus («&nbsp;La justice face à la particratie&nbsp;: un arsenal largement désarmé&nbsp;») démontre l'inefficacité structurelle des recours&nbsp;: aucun contentieux jamais introduit sur la discipline de vote, Cour constitutionnelle limitée au Titre II, partis hors du champ du Conseil d'État. Un autre pôle (l'audit «&nbsp;trois verrous&nbsp;») conclut que «&nbsp;l'absence de recours n'est pas avérée&nbsp;» — canaux réels, effectivité inégale. Les deux ont raison sur des objets différents&nbsp;: <em>aucun recours n'a jamais abouti contre la particratie comme système</em> (fait), mais <em>des voies existent et n'ont jamais été sérieusement essayées</em> (fait aussi — le corpus documente lui-même qu'aucune action fondée sur l'article&nbsp;42 n'a jamais été introduite). La formulation honnête&nbsp;: non pas «&nbsp;pas de recours&nbsp;», mais «&nbsp;des recours théoriques jamais testés, coûteux, à l'issue incertaine&nbsp;». C'est moins percutant et plus vrai.</div>
+    <div class="c-src">Fichiers en tension&nbsp;: «&nbsp;arsenal largement désarmé&nbsp;» ↔ «&nbsp;audit trois verrous&nbsp;» ↔ «&nbsp;partianti&nbsp;» («&nbsp;l'article 42 n'est pas mort, mais il dort&nbsp;»)</div>
+  </div>
+  <div class="claim cc">
+    <div class="c-top"><span class="c-text">«&nbsp;Le financement public des partis, c'est X millions.&nbsp;»</span><span class="stamp g-c">C · Contesté (périmètres)</span></div>
+    <div class="c-verdict">Le corpus cite 36,7&nbsp;M€, 75&nbsp;M€, 93&nbsp;M€, 108,7&nbsp;M€, 183,7&nbsp;M€ et 188,3&nbsp;M€ — souvent sans préciser le périmètre, ce qui donne l'impression de chiffres contradictoires. Ils ne le sont pas&nbsp;: voir la table de concordance ci-dessous, qui résout la contradiction apparente. C'est un cas d'école&nbsp;: la contradiction n'était pas dans les faits mais dans l'absence de métadonnées.</div>
+    <div class="c-src">Résolution&nbsp;: section 04</div>
+  </div>
+  <div class="claim cc">
+    <div class="c-top"><span class="c-text">Le verdict global&nbsp;: «&nbsp;particratie consolidée dans la norme européenne&nbsp;» ou «&nbsp;État illibéral&nbsp;/&nbsp;voyou&nbsp;»&nbsp;?</span><span class="stamp g-c">C · Contesté (registre)</span></div>
+    <div class="c-verdict">Le corpus héberge deux registres inconciliables&nbsp;: l'audit mesuré (Gallagher moyen, discipline comparable aux voisins, «&nbsp;ni exception scandaleuse ni modèle&nbsp;») et le réquisitoire («&nbsp;fraude à la Constitution&nbsp;», «&nbsp;intentionnalité malveillante&nbsp;», «&nbsp;État voyou&nbsp;?&nbsp;»). Le premier registre est défendable pièce par pièce&nbsp;; le second projette une intention (la malveillance délibérée) que le corpus lui-même reconnaît ailleurs ne pas pouvoir démontrer — l'audit «&nbsp;trois verrous&nbsp;» note explicitement que l'asymétrie est «&nbsp;objectivable mais non démontrée comme délibérée&nbsp;». Pour une page de référence, le registre mesuré n'est pas une concession&nbsp;: c'est une arme. Un système qui produit ces effets <em>sans qu'on ait besoin de supposer un complot</em> est plus accablant, pas moins.</div>
+    <div class="c-src">Fichiers en tension&nbsp;: «&nbsp;Belgique&nbsp;: État illibéral ou voyou&nbsp;?&nbsp;» ↔ «&nbsp;audit trois verrous&nbsp;» ↔ «&nbsp;Stratégies de contentieux&nbsp;»</div>
+  </div>
+
+  <h3>Grade D — fragile, à ne pas citer sans vérification</h3>
+  <div class="claim cd">
+    <div class="c-top"><span class="c-text">«&nbsp;Discipline de vote&nbsp;: 99,73&nbsp;%.&nbsp;»</span><span class="stamp g-d">D · Fragile</span></div>
+    <div class="c-verdict">Le chiffre à deux décimales circule dans plusieurs fichiers sans que sa source primaire (quelle législature&nbsp;? quels votes&nbsp;? quelle méthode de comptage des abstentions&nbsp;?) soit jamais spécifiée. La précision excessive sans traçabilité est un marqueur classique de dérive documentaire — chaque génération recopie le chiffre du fichier précédent. L'ordre de grandeur (≈&nbsp;99&nbsp;%) est de grade A&nbsp;; les deux décimales sont de la fausse monnaie.</div>
+    <div class="c-src">Action requise&nbsp;: retrouver l'étude d'origine (probablement Verleden ou Depauw) ou arrondir partout</div>
+  </div>
+  <div class="claim cd">
+    <div class="c-top"><span class="c-text">«&nbsp;Le 20 mars 2026, 0 président de parti sur 10 a signé l'Engagement sur l'Honneur&nbsp;» — «&nbsp;preuve irréfutable de l'intentionnalité malveillante&nbsp;».</span><span class="stamp g-d">D · Fragile</span></div>
+    <div class="c-verdict">Aucune trace de cet événement en dehors d'un seul fichier de stratégie contentieuse, qui le présente comme une opération déjà réalisée. S'il s'agit d'une action réelle du collectif, elle doit être documentée (courriers, accusés de réception, couverture presse)&nbsp;; s'il s'agit d'un scénario prospectif généré par IA et reformulé au passé — hypothèse sérieuse vu le style —, le présenter comme fait accompli est exactement le type d'erreur qui discréditerait tout le dépôt devant un contradicteur. Même remarque pour le «&nbsp;Calculateur de l'Absurde Démocratique&nbsp;» et ses «&nbsp;4 milliards captés depuis 1989&nbsp;»&nbsp;: un cumul nominal sur 35 ans sans actualisation ni périmètre défini n'est pas un chiffre, c'est un slogan.</div>
+    <div class="c-src">Fichier concerné&nbsp;: «&nbsp;Stratégies de Contentieux… Fiction Constitutionnelle&nbsp;» · action requise&nbsp;: documenter ou requalifier en scénario</div>
+  </div>
+  <div class="claim cd">
+    <div class="c-top"><span class="c-text">Dates de consultation postérieures ou incohérentes dans les bibliographies («&nbsp;consulté le 30 avril 2026&nbsp;», etc.).</span><span class="stamp g-d">D · Fragile</span></div>
+    <div class="c-verdict">Plusieurs fichiers portent des dates de consultation générées mécaniquement, parfois incohérentes entre elles. Détail&nbsp;? Non&nbsp;: c'est la première chose qu'un vérificateur hostile relèvera pour délégitimer l'ensemble. Un corpus qui dénonce l'opacité doit être irréprochable sur ses propres métadonnées.</div>
+    <div class="c-src">Action requise&nbsp;: passe de nettoyage bibliographique sur l'ensemble du dépôt</div>
+  </div>
+</section>
+<!-- ============ 4. CONCORDANCE ============ -->
+<section class="chap wrap col" id="concordance">
+  <div class="chap-head"><span class="chap-num">04</span><h2>Table de concordance&nbsp;: «&nbsp;combien&nbsp;» coûtent les partis</h2></div>
+  <p class="lede">Six chiffres circulent dans le corpus pour «&nbsp;le&nbsp;» financement des partis. Aucun n'est faux. Aucun n'est interchangeable.</p>
+  <div class="tbl-scroll">
+  <table>
+    <caption>Concordance des périmètres — année de référence 2024 sauf mention</caption>
+    <thead><tr><th scope="col">Chiffre cité</th><th scope="col">Périmètre exact</th><th scope="col">Source</th><th scope="col">Usage correct</th></tr></thead>
+    <tbody>
+      <tr><td class="num">36,7&nbsp;M€</td><td>Dotation <strong>fédérale</strong> seule (Chambre)</td><td>KU Leuven 2025</td><td>Parler du niveau fédéral uniquement</td></tr>
+      <tr><td class="num">75–93&nbsp;M€</td><td>Dotations directes de <strong>toutes les assemblées</strong> (fourchette selon inclusion des dons/cotisations)</td><td>Questure, CRISP</td><td>Parler des subventions directes cumulées</td></tr>
+      <tr><td class="num">83,7&nbsp;M€</td><td>Subventions publiques directes consolidées, comptes 2024</td><td>KU Leuven 2025</td><td>Le chiffre de référence «&nbsp;subventions directes&nbsp;»</td></tr>
+      <tr><td class="num">108,7&nbsp;M€</td><td><strong>Revenus totaux</strong> des partis (public + dons + cotisations + rétrocessions)</td><td>KU Leuven 2025</td><td>Calculer le taux de dépendance (83,7/108,7 ≈ 77&nbsp;%)</td></tr>
+      <tr><td class="num">183,7&nbsp;M€</td><td>Part du <strong>budget parlementaire</strong> 2024 versée à l'écosystème partisan (29,7&nbsp;% de 619&nbsp;M€)</td><td>Analyse budgétaire du corpus</td><td>Périmètre budgétaire — à recouper avant citation</td></tr>
+      <tr><td class="num">188,3&nbsp;M€</td><td>Financement public <strong>total de l'écosystème</strong>&nbsp;: subventions + collaborateurs parlementaires</td><td>KU Leuven 2025</td><td>Le chiffre de référence «&nbsp;coût public total&nbsp;»</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><strong>Règle proposée pour tout le dépôt&nbsp;:</strong> ne plus jamais écrire un montant de financement sans son périmètre entre parenthèses. La quasi-totalité des «&nbsp;contradictions&nbsp;» chiffrées du corpus disparaissent avec cette seule discipline. Même traitement pour l'indice de Gallagher (3,57 / 4,42 / 5,5 selon la méthode de calcul et l'année&nbsp;: méthode Lijphart sans catégorie «&nbsp;autres&nbsp;», série officielle Trinity College 2019, calcul 2024 avec «&nbsp;autres&nbsp;» agrégés).</p>
+</section>
+
+<!-- ============ 5. SIMULATEUR ============ -->
+<section class="chap wrap col" id="simulateur">
+  <div class="chap-head"><span class="chap-num">05</span><h2>Éprouver le mécanisme&nbsp;: simulateur de l'effet dévolutif</h2></div>
+  <p class="lede">120 documents décrivent l'effet dévolutif. Aucun ne permet de le <em>ressentir</em>. Voici le premier outil interactif du dépôt.</p>
+  <p>Scénario pédagogique&nbsp;: un parti obtient <strong>3 sièges</strong> dans une circonscription. Sa liste compte 6 candidats. La candidate en 4ᵉ position — appelons-la la «&nbsp;candidate populaire&nbsp;» — récolte davantage de voix de préférence que les candidats placés au-dessus d'elle par le parti. Est-elle élue&nbsp;? La réponse dépend du régime de dévolution — c'est-à-dire de l'endroit où vous votez.</p>
+
+  <div class="simu" id="simu">
+    <h4>Qui décide&nbsp;: vos voix ou l'ordre de la liste&nbsp;?</h4>
+    <p class="s-sub">Modèle simplifié · art. 167-172 du Code électoral</p>
+
+    <label for="tete">Part des électeurs votant en case de tête&nbsp;: <span id="teteVal" class="mono">55&nbsp;%</span></label>
+    <input type="range" id="tete" min="0" max="90" value="55" step="5" aria-describedby="teteHelp">
+    <p id="teteHelp" class="note" style="margin-top:4px">Aux scrutins récents, une part importante des électeurs vote en case de tête plutôt qu'en voix de préférence.</p>
+
+    <div class="regimes" role="group" aria-label="Choisir le régime de dévolution">
+      <button type="button" data-r="1" aria-pressed="false">Avant 2000 · dévolution 100&nbsp;%</button>
+      <button type="button" data-r="0.5" aria-pressed="true">Fédéral aujourd'hui · 50&nbsp;%</button>
+      <button type="button" data-r="0" aria-pressed="false">Wallonie depuis 2011 · 0&nbsp;%</button>
+    </div>
+
+    <div id="candList" style="margin-top:14px"></div>
+    <div class="verdict" id="verdict" aria-live="polite"></div>
+    <p class="note">Modèle volontairement simplifié à visée pédagogique&nbsp;: un seul chiffre d'éligibilité (quotient voix totales / sièges+1), pot dévolutif attribué dans l'ordre de la liste jusqu'à éligibilité, sièges restants aux meilleures voix de préférence. Le mécanisme réel comporte des raffinements (suppléants, transferts partiels) qui ne changent pas la logique démontrée ici.</p>
+  </div>
+
+  <p>Ce que le simulateur rend tangible — et que vingt documents de prose ne rendaient pas&nbsp;: <strong>le même bulletin, avec les mêmes voix, produit des élus différents selon la région</strong>. La variable décisive n'est pas le choix de l'électeur mais le taux de dévolution, fixé par ceux-là mêmes qu'il avantage. Et le fait que la Wallonie ait pu le supprimer en 2011 sans effondrement démocratique est la meilleure réponse à l'argument de la nécessité.</p>
+</section>
+
+<!-- ============ 6. STRESS TEST ============ -->
+<section class="chap wrap col" id="stress">
+  <div class="chap-head"><span class="chap-num">06</span><h2>Le stress-test&nbsp;: qu'est-ce qui ferait tomber la thèse&nbsp;?</h2></div>
+  <p class="lede">Un corpus qui ne peut pas dire ce qui le réfuterait n'est pas une recherche, c'est une plaidoirie. Voici le test qu'aucun des 120 fichiers ne s'impose.</p>
+  <h3>Le meilleur argument adverse (steelman)</h3>
+  <p>Reconstruisons la défense du système telle qu'un constitutionnaliste loyal la porterait. <em>Un&nbsp;:</em> la discipline partisane est la condition de la lisibilité démocratique — l'électeur vote pour un programme, pas pour 150 consciences individuelles, et sanctionner un programme suppose qu'il ait été appliqué en bloc. <em>Deux&nbsp;:</em> dans un pays à deux opinions publiques, sans partis nationaux ni médias communs, l'intermédiation partisane forte est ce qui a permis six réformes de l'État sans une goutte de sang — la particratie belge est le prix de la paix communautaire, et il est historiquement bas. <em>Trois&nbsp;:</em> le financement public généreux a éradiqué la corruption à l'ancienne (Agusta) et protège les partis de la capture par les grandes fortunes — le contre-modèle américain est pire. <em>Quatre&nbsp;:</em> les indicateurs internationaux (élections libres, presse évaluée satisfaisante par le Media Pluralism Monitor, juridictions indépendantes) restent ceux d'une démocratie pleine. Ce steelman ne renverse pas le diagnostic du corpus — mais il explique pourquoi le système tient, ce que le corpus, tout à sa dénonciation, explique rarement&nbsp;: <strong>la particratie belge n'est pas un parasite du système, elle en est le système de stabilité</strong>. La réformer exige donc de proposer un autre garant de stabilité, pas seulement de démonter celui-ci.</p>
+  <h3>Cinq observations qui réfuteraient (ou affaibliraient) la thèse centrale</h3>
+  <div class="encart">
+    <h4>Protocole de falsifiabilité</h4>
+    <p><strong>1.</strong> Un dépouillement candidat par candidat des élections 2024 montrant qu'une large majorité des élus fédéraux atteignent le chiffre d'éligibilité par leurs seules voix de préférence — le verrou électoral serait alors largement théorique. <em>Donnée calculable à partir des fichiers SPF Intérieur&nbsp;; personne ne l'a fait. C'est le chantier n°1 du dépôt.</em></p>
+    <p><strong>2.</strong> La sortie de la Belgique de la procédure de non-conformité GRECO avec création d'une autorité de contrôle indépendante — le verrou financier serait en voie de résorption.</p>
+    <p><strong>3.</strong> Une décision de justice belge acceptant d'examiner au fond un recours fondé sur l'article&nbsp;42 et le rejetant après examen — prouvant que la voie contentieuse était ouverte et que le grief était infondé, non que la porte était fermée.</p>
+    <p><strong>4.</strong> Des données montrant que les recommandations des panels citoyens (Ostbelgien, commissions bruxelloises) sont majoritairement suivies d'effets législatifs — le grief de la participation-alibi tomberait.</p>
+    <p><strong>5.</strong> Une étude de cohésion montrant une discipline belge significativement <em>supérieure</em> à celle de pays sans les trois verrous — car si des pays à listes ouvertes et financement contrôlé affichent la même discipline à 99&nbsp;%, alors la discipline ne prouve pas les verrous, et le corpus devrait réviser sa chaîne causale. <em>Les données comparatives existantes (tous les régimes parlementaires &gt; 90&nbsp;%) rendent ce point sérieux&nbsp;: c'est la vulnérabilité logique la plus réelle de la thèse.</em></p>
+  </div>
+  <p>Aucune de ces cinq observations ne s'est produite à ce jour — c'est précisément ce qui rend la thèse du corpus robuste. Mais les inscrire noir sur blanc change le statut du projet&nbsp;: d'un réquisitoire qu'on croit ou non, il devient une hypothèse scientifique qu'on peut tester. C'est la différence entre convaincre les convaincus et devenir une référence.</p>
+</section>
+
+<!-- ============ 7. ANGLES MORTS ============ -->
+<section class="chap wrap col" id="angles">
+  <div class="chap-head"><span class="chap-num">07</span><h2>Ce que le corpus ignore encore</h2></div>
+  <p>Au-delà du dépouillement 2024 (chantier n°1), quatre angles morts substantiels, par ordre de rendement décroissant pour le projet&nbsp;:</p>
+  <p><strong>Le chaînon manquant entre les deux moitiés du corpus.</strong> Le dépôt contient d'un côté l'analyse de la particratie, de l'autre celle du non-recours aux droits et de la violence institutionnelle — deux corpus juxtaposés. Le lien causal (la particratie produit-elle spécifiquement le non-recours&nbsp;? par quels mécanismes budgétaires et administratifs&nbsp;?) est affirmé, jamais démontré. C'est pourtant la thèse la plus originale du projet, celle qu'aucun universitaire n'a construite&nbsp;: elle mérite un traitement empirique dédié — suivre l'argent des dotations partisanes et des cabinets jusqu'aux guichets sous-financés.</p>
+  <p><strong>Le point de vue des acteurs.</strong> 120 documents, zéro entretien. Les présidents de parti, les députés disciplinés, les membres de la Commission de contrôle ont des raisons d'agir comme ils agissent&nbsp;; les documenter (même par leurs déclarations publiques, systématiquement compilées) renforcerait l'analyse au lieu de l'affaiblir.</p>
+  <p><strong>La Flandre.</strong> Le corpus est écrit depuis la Belgique francophone et cite surtout des effets francophones. Or la science politique de la particratie est largement flamande (Dewachter, Maddens, Verleden, De Winter). Une cartographie du débat flamand — où la critique de la particratie nourrit aussi le nationalisme — éviterait au projet un angle mort communautaire qui est précisément le mécanisme qu'il dénonce.</p>
+  <p><strong>Le coût de la réforme.</strong> Le corpus liste les réformes souhaitables, jamais leurs effets secondaires. Que devient la stabilité des coalitions avec des élus réellement libres&nbsp;? Qui finance les partis si l'État ne le fait plus&nbsp;? Les réponses existent (littérature comparative allemande, néerlandaise, suisse)&nbsp;; les intégrer transformerait le plaidoyer en programme.</p>
+</section>
+<!-- ============ 8. PROTOCOLE ============ -->
+<section class="chap wrap col" id="protocole">
+  <div class="chap-head"><span class="chap-num">08</span><h2>Protocole proposé pour la suite du dépôt</h2></div>
+  <p>Cinq règles d'hygiène documentaire, applicables dès demain, qui feraient du dépôt la référence qu'il veut être&nbsp;:</p>
+  <div class="encart">
+    <h4>Charte épistémique carte-blanche</h4>
+    <p><strong>1. Un chiffre = un périmètre + une source + une date.</strong> Jamais de montant, de pourcentage ou d'indice sans ses trois métadonnées (voir table de concordance, section&nbsp;04).</p>
+    <p><strong>2. Tamponner les affirmations.</strong> Adopter les grades A/B/C/D de cette page pour toute nouvelle affirmation structurante&nbsp;; ne mettre en avant (titres, résumés, réseaux sociaux) que du grade A.</p>
+    <p><strong>3. Séparer le constat du scénario.</strong> Les stratégies contentieuses prospectives sont précieuses, mais doivent être marquées comme telles — jamais rédigées au passé comme des faits accomplis.</p>
+    <p><strong>4. Dédupliquer avant d'ajouter.</strong> Tout nouveau document doit dire en une ligne ce qu'il ajoute que le corpus ne contenait pas. S'il ne peut pas, il n'entre pas.</p>
+    <p><strong>5. Inviter la contradiction.</strong> Publier le protocole de falsifiabilité (section&nbsp;06) en tête du dépôt et traiter toute réfutation sourcée comme une contribution, pas comme une attaque.</p>
+  </div>
+</section>
+
+<!-- ============ 9. METHODE ============ -->
+<section class="chap wrap col" id="methode">
+  <div class="chap-head"><span class="chap-num">09</span><h2>Méthode, auteur &amp; limites</h2></div>
+  <div class="sig-card">
+    <span class="sig-stamp">Audité par une IA<br>— qui se sait faillible</span>
+    <div class="sig-body">
+      <p><strong>Auteur.</strong> Cette page a été rédigée par <strong>Claude</strong> (Anthropic), à la demande de l'éditeur du dépôt, avec pour consigne explicite d'innover sur l'existant. Le choix de l'audit réflexif est celui de l'IA&nbsp;: un corpus co-écrit par des IA et jamais contre-expertisé est le maillon faible d'un projet qui dénonce précisément l'absence de contre-expertise.</p>
+      <p><strong>Méthode.</strong> Sondages systématiques du corpus par thème, repérage des convergences et des tensions internes, classement des affirmations structurantes en quatre grades de robustesse, résolution des contradictions résolubles (périmètres), documentation des irrésolubles. Le simulateur implémente une version simplifiée des articles 167-172 du Code électoral.</p>
+      <p><strong>Limites — et elles comptent.</strong> Je n'ai pas lu les 120 fichiers ligne à ligne&nbsp;: l'audit repose sur un échantillonnage large mais non exhaustif, et le triage porte sur quinze affirmations structurantes, pas sur toutes. Une IA qui audite des IA reste un système partiellement endogame&nbsp;: ce travail réduit le risque d'erreur, il ne le supprime pas. La validation finale — vérifier les grades D, réaliser le dépouillement 2024, trancher les grades C — revient à des humains. C'est même son objet&nbsp;: cette page n'est pas une conclusion, c'est un cahier des charges.</p>
+      <p><strong>Licence.</strong> <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license external">CC&nbsp;BY-SA&nbsp;4.0</a>. Corrections sourcées bienvenues via les <em>issues</em> du dépôt.</p>
+    </div>
+  </div>
+</section>
+
+</article>
+</main>
+
+<footer class="wrap">
+  <span><a href="../representation-democratique-belgique.html">← Dossier de référence</a> · <a href="https://github.com/ouaisfieu/carte-blanche">github.com/ouaisfieu/carte-blanche</a></span>
+  <span>Signé&nbsp;: Claude (Anthropic) · <time datetime="2026-07-19">2026-07-19</time> · CC BY-SA 4.0</span>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  // --- Modèle pédagogique simplifié de l'effet dévolutif ---
+  // Un parti, 3 sièges, 6 candidats. Total 30 000 voix pour la liste.
+  var TOTAL = 30000, SEATS = 3;
+  // Répartition des voix de préférence (parts relatives) : la candidate n°4 est populaire.
+  var CANDS = [
+    {pos:1, nom:"Tête de liste (choix du parti)", part:0.30},
+    {pos:2, nom:"Candidat n°2 (choix du parti)", part:0.10},
+    {pos:3, nom:"Candidat n°3 (choix du parti)", part:0.07},
+    {pos:4, nom:"Candidate populaire (portée par les électeurs)", part:0.34},
+    {pos:5, nom:"Candidat n°5", part:0.12},
+    {pos:6, nom:"Candidat n°6", part:0.07}
+  ];
+  var rate = 0.5; // régime fédéral par défaut
+  var teteEl = document.getElementById("tete");
+  var teteVal = document.getElementById("teteVal");
+  var listEl = document.getElementById("candList");
+  var verdictEl = document.getElementById("verdict");
+  var buttons = document.querySelectorAll(".regimes button");
+
+  function fmt(n){ return Math.round(n).toLocaleString("fr-BE"); }
+
+  function compute(){
+    var tetePct = parseInt(teteEl.value,10)/100;
+    var voixTete = TOTAL * tetePct;
+    var voixPref = TOTAL - voixTete;
+    var elig = TOTAL / (SEATS + 1); // chiffre d'éligibilité simplifié
+    var pot = voixTete * rate;
+
+    // 1) voix de préférence de chaque candidat
+    var cands = CANDS.map(function(c){
+      return {pos:c.pos, nom:c.nom, pref: voixPref * c.part, devol:0, elu:false};
+    });
+    // 2) attribution du pot dans l'ordre de la liste jusqu'au chiffre d'éligibilité
+    var rest = pot;
+    cands.forEach(function(c){
+      if(rest <= 0) return;
+      var need = Math.max(0, elig - c.pref);
+      var take = Math.min(need, rest);
+      c.devol = take; rest -= take;
+    });
+    // 3) élus : ceux qui atteignent l'éligibilité (ordre de liste), puis meilleures voix totales
+    var byOrder = cands.slice().sort(function(a,b){ return a.pos - b.pos; });
+    var seats = SEATS;
+    byOrder.forEach(function(c){
+      if(seats>0 && (c.pref + c.devol) >= elig - 0.5){ c.elu = true; seats--; }
+    });
+    if(seats>0){
+      cands.slice().sort(function(a,b){ return (b.pref+b.devol)-(a.pref+a.devol); })
+        .forEach(function(c){ if(seats>0 && !c.elu){ c.elu=true; seats--; } });
+    }
+
+    // rendu
+    var max = elig * 1.3;
+    listEl.innerHTML = cands.map(function(c){
+      var wPref = Math.min(100, (c.pref/max)*100);
+      var wDev = Math.min(100 - wPref, (c.devol/max)*100);
+      return '<div class="cand '+(c.elu?"elu":"battu")+'">'
+        + '<span class="pos">'+c.pos+'</span>'
+        + '<span>'+c.nom+'<br><span class="mono" style="font-size:.68rem;color:var(--ink-faint)">'+fmt(c.pref)+' préf. + <span style="color:var(--crayon)">'+fmt(c.devol)+' dévolu</span></span></span>'
+        + '<span class="cbar" aria-hidden="true"><i style="width:'+wPref+'%"></i><b style="left:'+wPref+'%;width:'+wDev+'%"></b></span>'
+        + '<span class="st">'+(c.elu?"Élu·e":"—")+'</span>'
+        + '</div>';
+    }).join("");
+
+    // comparaison des trois régimes avec les mêmes voix
+    function elusPour(r){
+      var pot2 = voixTete * r, rest2 = pot2, seats2 = SEATS;
+      var cs = CANDS.map(function(c){ return {pos:c.pos, pref: voixPref*c.part, devol:0, elu:false}; });
+      cs.forEach(function(c){ if(rest2<=0) return; var need=Math.max(0,elig-c.pref); var t=Math.min(need,rest2); c.devol=t; rest2-=t; });
+      cs.slice().sort(function(a,b){return a.pos-b.pos;}).forEach(function(c){ if(seats2>0 && (c.pref+c.devol)>=elig-0.5){ c.elu=true; seats2--; } });
+      if(seats2>0){ cs.slice().sort(function(a,b){return (b.pref+b.devol)-(a.pref+a.devol);}).forEach(function(c){ if(seats2>0 && !c.elu){ c.elu=true; seats2--; } }); }
+      return cs.filter(function(c){return c.elu;}).map(function(c){return "n°"+c.pos;}).join(", ");
+    }
+    var e100=elusPour(1), e50=elusPour(0.5), e0=elusPour(0);
+    var identiques = (e100===e50 && e50===e0);
+    verdictEl.innerHTML = "<strong>Chiffre d'éligibilité :</strong> "+fmt(elig)+" voix · <strong>pot dévolutif (régime affiché) :</strong> "+fmt(pot)+" voix."
+      + "<br><strong>Mêmes voix, trois régimes :</strong> avant 2000 → élus "+e100+" · fédéral (50 %) → "+e50+" · Wallonie (0 %) → "+e0+"."
+      + "<br>"+(identiques
+        ? "Avec si peu de votes en case de tête, le régime ne change rien : les voix de préférence décident seules. Augmentez la case de tête pour voir les élus changer."
+        : "Mêmes électeurs, mêmes voix — mais des élus différents selon le taux de dévolution. La variable décisive n'est pas le choix de l'électeur : c'est le régime, fixé par ceux qu'il avantage.");
+  }
+
+  teteEl.addEventListener("input", function(){ teteVal.textContent = teteEl.value+" %"; compute(); });
+  buttons.forEach(function(b){
+    b.addEventListener("click", function(){
+      buttons.forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      rate = parseFloat(b.getAttribute("data-r"));
+      compute();
+    });
+  });
+  compute();
+})();
+</script>
+</body>
+</html>
