@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr-BE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carte blanche — le dossier citoyen sur la démocratie belge</title>
+<meta name="description" content="Quatre documents, un seul dossier : tribune citoyenne, pièces à conviction, dossier de référence sur la particratie, audit épistémique du corpus. Entièrement sourcé. Compte à rebours : échéance GRECO du 30 novembre 2026.">
+<link rel="canonical" href="https://ouaisfieu.github.io/carte-blanche/">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carte blanche — le dossier citoyen sur la démocratie belge">
+<meta property="og:description" content="L'État vous oblige à obéir. Lui, n'obéit plus. Quatre documents sourcés sur la particratie, la non-exécution des jugements et le coût humain des failles belges.">
+<meta property="og:url" content="https://ouaisfieu.github.io/carte-blanche/">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:site_name" content="Carte blanche — dossiers citoyens">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23E8E5DC'/%3E%3Crect x='4' y='4' width='24' height='24' fill='none' stroke='%23B3231A' stroke-width='3' transform='rotate(-8 16 16)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Courier+Prime:wght@400;700&family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Carte blanche — dossiers citoyens",
+  "url": "https://ouaisfieu.github.io/carte-blanche/",
+  "inLanguage": "fr-BE",
+  "description": "Dossier citoyen sourcé sur la particratie belge, la non-exécution des décisions de justice et le non-recours aux droits."
+}
+</script>
+<style>
+:root{
+  --papier:#E8E5DC;
+  --papier-sombre:#DDD9CC;
+  --encre:#16130C;
+  --tampon:#B3231A;
+  --bic:#1F3D96;
+  --gris:#6E695B;
+  --ligne:#C6C1B2;
+  --col:min(76ch,92vw);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--papier);color:var(--encre);
+  font-family:"Libre Franklin",system-ui,sans-serif;
+  font-size:1.05rem;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--tampon);color:var(--papier)}
+.col{width:var(--col);margin:0 auto}
+a{color:var(--bic)}
+a:focus-visible{outline:3px solid var(--bic);outline-offset:3px}
+.mono{font-family:"Courier Prime",monospace}
+
+/* hero */
+header{padding:5.5rem 0 3.5rem}
+.kicker{
+  font-family:"Courier Prime",monospace;font-size:.88rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--gris);margin-bottom:1.8rem;
+}
+.kicker b{color:var(--encre)}
+h1{
+  font-family:"Anton",sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(2.6rem,8.5vw,5.6rem);line-height:.97;letter-spacing:.005em;
+}
+h1 .rouge{color:var(--tampon)}
+.hero-sub{margin-top:1.8rem;max-width:60ch;font-size:clamp(1rem,2vw,1.18rem)}
+
+/* compte à rebours */
+.compteur-wrap{
+  background:var(--encre);color:var(--papier);
+  padding:3.2rem 0;margin:2.5rem 0 0;
+}
+.compteur-wrap .lab{
+  font-family:"Courier Prime",monospace;font-size:.85rem;letter-spacing:.12em;
+  text-transform:uppercase;color:#B7B2A2;
+}
+.jmoins{
+  font-family:"Anton",sans-serif;font-size:clamp(3.4rem,13vw,8rem);
+  line-height:1;color:#FF5A4E;font-variant-numeric:tabular-nums;
+}
+.compteur-wrap .cap{
+  font-family:"Courier Prime",monospace;font-size:.9rem;color:#B7B2A2;
+  max-width:64ch;margin-top:1rem;
+}
+.compteur-wrap .cap b{color:var(--papier)}
+
+/* chemises du dossier */
+main{padding:4rem 0 2rem}
+.section-lab{
+  font-family:"Courier Prime",monospace;font-weight:700;font-size:.9rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  border-top:2px solid var(--encre);border-bottom:1px solid var(--ligne);
+  padding:.55rem 0;margin-bottom:2.2rem;color:var(--gris);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+.section-lab b{color:var(--encre)}
+.chemises{display:grid;gap:1.4rem}
+.chemise{
+  display:block;text-decoration:none;color:inherit;
+  border:2px solid var(--encre);background:#F1EEE4;
+  padding:1.6rem 1.7rem 1.5rem;position:relative;
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.chemise:hover,.chemise:focus-visible{
+  transform:translate(-3px,-3px);
+  box-shadow:5px 5px 0 var(--encre);
+}
+@media (prefers-reduced-motion:reduce){
+  .chemise{transition:none}
+  .chemise:hover,.chemise:focus-visible{transform:none;box-shadow:4px 4px 0 var(--encre)}
+}
+.chemise .meta{
+  font-family:"Courier Prime",monospace;font-size:.8rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gris);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.7rem;
+}
+.chemise .meta b{color:var(--tampon)}
+.chemise h2{
+  font-family:"Anton",sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.35rem,3.4vw,1.9rem);line-height:1.08;margin-bottom:.6rem;
+}
+.chemise p{font-size:.98rem;color:#3E3A2E;max-width:66ch}
+.chemise .aller{
+  font-family:"Courier Prime",monospace;font-weight:700;font-size:.85rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--bic);
+  display:inline-block;margin-top:.9rem;
+}
+
+/* méthode */
+.methode{padding:3.5rem 0 4rem}
+.methode p{margin-bottom:1.2rem;max-width:70ch}
+.avertissement{
+  font-family:"Courier Prime",monospace;font-size:.85rem;color:var(--gris);
+  border:1px dashed var(--gris);padding:1rem 1.2rem;margin-top:1.6rem;max-width:74ch;
+}
+
+footer{
+  border-top:2px solid var(--encre);padding:2.2rem 0 3.5rem;
+  font-family:"Courier Prime",monospace;font-size:.85rem;color:var(--gris);
+}
+footer a{color:var(--bic)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="col">
+    <p class="kicker">CARTE BLANCHE — <b>DOSSIER CITOYEN</b> — DÉMOCRATIE BELGE — DIFFUSION LIBRE</p>
+    <h1>Un dossier.<br>Quatre pièces.<br><span class="rouge">Zéro adjectif gratuit.</span></h1>
+    <p class="hero-sub">
+      Ce site rassemble un travail citoyen de documentation sur l'état réel de la démocratie belge :
+      particratie, jugements ignorés par l'État, financement autocontrôlé des partis, droits sociaux non versés.
+      Chaque affirmation est sourcée. Chaque document est vérifiable. Commencez où vous voulez.
+    </p>
+  </div>
+</header>
+
+<div class="compteur-wrap">
+  <div class="col">
+    <p class="lab">Échéance GRECO — Conseil de l'Europe — 30 novembre 2026</p>
+    <p class="jmoins">J−<span id="jours">134</span></p>
+    <p class="cap">
+      La Belgique, sous procédure de non-conformité anticorruption, doit rendre son rapport de progrès
+      au GRECO <b>au plus tard le 30 novembre 2026</b>. Elle en est au dernier palier d'escalade avant la
+      déclaration publique de non-conformité — prononcée une seule fois dans l'histoire, contre la Biélorussie.
+      Ce compte à rebours est la date butoir de ce dossier.
+    </p>
+  </div>
+</div>
+
+<main>
+  <div class="col">
+    <div class="section-lab"><span><b>INVENTAIRE</b> — LES PIÈCES DU DOSSIER</span><span>4 DOCUMENTS</span></div>
+    <div class="chemises">
+
+      <a class="chemise" href="le-pire.html">
+        <p class="meta"><span><b>PIÈCE A</b> — ACTE D'ACCUSATION</span><span>LECTURE : 12 MIN</span></p>
+        <h2>Pièces à conviction — l'État vous oblige à obéir. Lui, n'obéit plus.</h2>
+        <p>Le document le plus dur du dossier. Dix mille jugements ignorés, un mur de dix mille traits,
+        le compteur des astreintes impayées, les détenus au sol, les invisibles du non-recours.
+        Sept pièces, un réquisitoire, toutes les sources.</p>
+        <span class="aller">Ouvrir la pièce A →</span>
+      </a>
+
+      <a class="chemise" href="tribune.html">
+        <p class="meta"><span><b>PIÈCE B</b> — TRIBUNE</span><span>LECTURE : 6 MIN</span></p>
+        <h2>Je vote, je paie, je me tais — chronique d'un citoyen ordinaire</h2>
+        <p>Le point de départ du projet : ce que découvre un citoyen moyen quand il tire le fil.
+        Le mandat libre devenu fiction, la caisse des partis, l'asymétrie entre ce qu'on exige de vous
+        et ce qu'on tolère d'eux. Le texte qui se partage.</p>
+        <span class="aller">Ouvrir la pièce B →</span>
+      </a>
+
+      <a class="chemise" href="representation-democratique-belgique.html">
+        <p class="meta"><span><b>PIÈCE C</b> — DOSSIER DE RÉFÉRENCE</span><span>LECTURE : 35 MIN</span></p>
+        <h2>Représentation démocratique en Belgique — anatomie d'une particratie</h2>
+        <p>La pièce de fond. Les trois verrous — électoral, parlementaire, financier — documentés aux
+        sources primaires : article 42, discipline de vote, effet dévolutif, financement autocontrôlé,
+        comparaisons européennes, voies de sortie, FAQ et glossaire.</p>
+        <span class="aller">Ouvrir la pièce C →</span>
+      </a>
+
+      <a class="chemise" href="claude/">
+        <p class="meta"><span><b>PIÈCE D</b> — CONTRE-EXPERTISE</span><span>LECTURE : 20 MIN</span></p>
+        <h2>L'audit de l'audit — ce que ce corpus sait, croit et ignore</h2>
+        <p>La pièce d'honnêteté : une IA passe au crible le corpus lui-même — largement co-écrit par des IA.
+        Ce qui est triangulé, ce qui repose sur une source unique, ce qui se contredit, ce qui reste à vérifier.
+        Lisez-la pour nous contredire mieux.</p>
+        <span class="aller">Ouvrir la pièce D →</span>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="col methode">
+    <div class="section-lab"><span><b>MÉTHODE</b></span><span>POURQUOI NOUS CROIRE — OU PAS</span></div>
+    <p>
+      Ce dossier ne demande pas d'être cru sur parole. Il s'appuie sur des sources primaires publiques :
+      arrêts de la Cour européenne des droits de l'homme (Camara, Vasilescu, M.V.), rapports du GRECO
+      et du Comité des Ministres du Conseil de l'Europe, audits de la Cour des comptes, enquêtes de
+      l'Institut fédéral des droits humains, études fédérales TAKE et BELMOD, travaux du CRISP et des
+      universités belges, données Eurostat, Sciensano et Eurobaromètre.
+    </p>
+    <p>
+      La démarche assume une thèse — la démocratie belge fonctionne « à deux étages » — mais elle assume
+      aussi sa propre critique : la pièce D est consacrée aux limites, angles morts et contradictions internes
+      du corpus. Toute correction factuelle argumentée est bienvenue via le dépôt GitHub.
+    </p>
+    <p class="avertissement">
+      NOTE — Ce site n'est ni un avis juridique ni un acte d'accusation individuel. Les personnes citées dans
+      des procédures en cours bénéficient de la présomption d'innocence. Les jugements de valeur sont signalés
+      comme tels. La colère est dans les faits, pas dans les adjectifs.
+    </p>
+  </div>
+</main>
+
+<footer>
+  <div class="col">
+    <p>CARTE BLANCHE — dossier citoyen, diffusion libre —
+    <a href="https://github.com/ouaisfieu/carte-blanche">code source &amp; corrections</a> —
+    dernière mise à jour : juillet 2026</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var deadline = new Date(2026,10,30); // 30 novembre 2026
+  var now = new Date();
+  var d = Math.ceil((deadline - now)/86400000);
+  var el = document.getElementById('jours');
+  if(d > 0){ el.textContent = d; }
+  else if(d === 0){ el.textContent = '0'; }
+  else{
+    el.parentNode.innerHTML = 'ÉCHÉANCE PASSÉE';
+  }
+})();
+</script>
+</body>
+</html>
