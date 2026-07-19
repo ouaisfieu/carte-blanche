@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIÈCES À CONVICTION — Ce que l'État belge fait quand il se croit seul</title>
+<meta name="description" content="Dix mille jugements ignorés. Des centaines de millions d'astreintes impayées. Des détenus au sol. Des droits non versés par millions. Un dossier à charge, entièrement sourcé.">
+<meta property="og:title" content="PIÈCES À CONVICTION — l'État belge condamné, l'État belge qui n'obéit pas">
+<meta property="og:description" content="Chaque trait de ce mur est un jugement que l'État a ignoré. Il y en a dix mille.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papier:#E8E5DC;
+  --papier-sombre:#DDD9CC;
+  --encre:#16130C;
+  --tampon:#B3231A;
+  --bic:#1F3D96;
+  --gris:#6E695B;
+  --ligne:#C6C1B2;
+  --col:min(70ch,92vw);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--papier);
+  color:var(--encre);
+  font-family:"Libre Franklin",system-ui,sans-serif;
+  font-size:1.06rem;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--tampon);color:var(--papier)}
+
+/* ---------- structure ---------- */
+.col{width:var(--col);margin:0 auto}
+section{padding:5rem 0}
+p{margin:0 0 1.35rem}
+strong{font-weight:800}
+a{color:var(--bic)}
+a:focus-visible{outline:3px solid var(--bic);outline-offset:3px}
+
+/* ---------- typo dossier ---------- */
+.mono{font-family:"Courier Prime",monospace}
+.piece-head{
+  font-family:"Courier Prime",monospace;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:.92rem;
+  color:var(--gris);
+  border-top:2px solid var(--encre);
+  border-bottom:1px solid var(--ligne);
+  padding:.55rem 0;
+  margin-bottom:2.2rem;
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+.piece-head b{color:var(--encre)}
+h2{
+  font-family:"Anton",sans-serif;
+  font-weight:400;
+  font-size:clamp(1.9rem,5.2vw,3.1rem);
+  line-height:1.06;
+  text-transform:uppercase;
+  letter-spacing:.01em;
+  margin:0 0 1.8rem;
+}
+.annotation{
+  font-family:"Courier Prime",monospace;
+  color:var(--bic);
+  font-size:.95rem;
+  border-left:3px solid var(--bic);
+  padding:.4rem 0 .4rem 1rem;
+  margin:1.8rem 0;
+}
+
+/* ---------- hero ---------- */
+header.hero{
+  min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:6rem 0 4rem;
+  position:relative;
+  overflow:hidden;
+}
+.kicker{
+  font-family:"Courier Prime",monospace;
+  font-size:.9rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gris);
+  margin-bottom:2rem;
+}
+.kicker b{color:var(--encre)}
+h1{
+  font-family:"Anton",sans-serif;font-weight:400;
+  font-size:clamp(3rem,11vw,8.2rem);
+  line-height:.95;
+  text-transform:uppercase;
+  letter-spacing:.005em;
+}
+h1 .rouge{color:var(--tampon)}
+.hero-sub{
+  margin-top:2.4rem;max-width:58ch;
+  font-size:clamp(1.05rem,2.1vw,1.3rem);
+  font-weight:400;
+}
+.hero-meta{
+  margin-top:3rem;
+  font-family:"Courier Prime",monospace;font-size:.85rem;color:var(--gris);
+  display:flex;gap:2.2rem;flex-wrap:wrap;
+}
+
+/* ---------- tampons ---------- */
+.stamp{
+  display:inline-block;
+  font-family:"Courier Prime",monospace;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;
+  color:var(--tampon);
+  border:3.5px solid var(--tampon);
+  padding:.28em .7em;
+  border-radius:4px;
+  transform:rotate(-6deg) scale(1);
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .82 .3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  mask-size:110px;
+}
+.stamp.big{font-size:clamp(1.4rem,4vw,2.4rem)}
+.stamp.reveal{opacity:0;transform:rotate(-6deg) scale(2.4)}
+.stamp.reveal.in{
+  opacity:1;transform:rotate(-6deg) scale(1);
+  transition:transform .28s cubic-bezier(.2,1.6,.35,1),opacity .18s ease-out;
+}
+@media (prefers-reduced-motion:reduce){
+  .stamp.reveal{opacity:1;transform:rotate(-6deg) scale(1);transition:none}
+}
+
+/* ---------- gros chiffres ---------- */
+.bignum{
+  font-family:"Anton",sans-serif;
+  font-size:clamp(3.4rem,12vw,9rem);
+  line-height:1;
+  color:var(--tampon);
+  letter-spacing:.01em;
+  display:block;
+  font-variant-numeric:tabular-nums;
+}
+.bignum-label{
+  font-family:"Courier Prime",monospace;
+  font-size:.95rem;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--gris);margin-top:.6rem;display:block;
+}
+.numrow{margin:3rem 0}
+
+/* ---------- compteur ---------- */
+.compteur-wrap{
+  background:var(--encre);color:var(--papier);
+  padding:4.5rem 0;
+  margin:4rem 0;
+}
+.compteur{
+  font-family:"Courier Prime",monospace;font-weight:700;
+  font-size:clamp(1.9rem,6.5vw,4.6rem);
+  letter-spacing:.02em;
+  color:#FF5A4E;
+  font-variant-numeric:tabular-nums;
+  word-break:break-all;
+}
+.compteur-wrap .cap{
+  font-family:"Courier Prime",monospace;font-size:.9rem;
+  color:#B7B2A2;margin-top:1.2rem;max-width:60ch;
+}
+.compteur-wrap .titre{
+  font-family:"Anton",sans-serif;text-transform:uppercase;
+  font-size:clamp(1.3rem,3.4vw,2rem);margin-bottom:1.6rem;color:var(--papier);
+}
+
+/* ---------- mur des jugements ---------- */
+.mur{
+  background:var(--papier-sombre);
+  border-top:2px solid var(--encre);
+  border-bottom:2px solid var(--encre);
+  padding:4.5rem 0;
+}
+.mur h2{max-width:var(--col);margin-left:auto;margin-right:auto}
+.mur .intro-mur{max-width:var(--col);margin:0 auto 2.5rem}
+#tally{display:block;width:min(1100px,94vw);margin:0 auto;}
+.mur .legend{
+  max-width:var(--col);margin:2rem auto 0;
+  font-family:"Courier Prime",monospace;font-size:.9rem;color:var(--gris);
+}
+
+/* ---------- section inversée (prisons) ---------- */
+.nuit{background:var(--encre);color:var(--papier)}
+.nuit .piece-head{color:#9B9686;border-top-color:var(--papier);border-bottom-color:#3A362B}
+.nuit .piece-head b{color:var(--papier)}
+.nuit .annotation{color:#8FA3E8;border-left-color:#8FA3E8}
+.nuit .bignum{color:#FF5A4E}
+.nuit .bignum-label{color:#9B9686}
+.nuit a{color:#8FA3E8}
+.nuit ::selection{background:var(--papier);color:var(--encre)}
+
+/* ---------- tableau confrontation ---------- */
+.vs{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:2px solid var(--encre);margin:2.5rem 0;
+}
+.vs>div{padding:1.6rem 1.4rem}
+.vs>div:first-child{border-right:2px solid var(--encre)}
+.vs .vs-head{
+  font-family:"Courier Prime",monospace;font-weight:700;font-size:.85rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--gris);margin-bottom:.9rem;
+}
+.vs .vs-num{
+  font-family:"Anton",sans-serif;font-size:clamp(1.8rem,5vw,3.4rem);line-height:1;
+}
+.vs .g{color:var(--bic)}
+.vs .r{color:var(--tampon)}
+.vs .vs-cap{font-size:.92rem;margin-top:.8rem;color:var(--gris)}
+@media(max-width:640px){
+  .vs{grid-template-columns:1fr}
+  .vs>div:first-child{border-right:0;border-bottom:2px solid var(--encre)}
+}
+
+/* ---------- citations pièces ---------- */
+blockquote{
+  font-family:"Courier Prime",monospace;
+  background:#F1EEE4;
+  border:1px solid var(--ligne);
+  padding:1.4rem 1.6rem;
+  margin:2rem 0;
+  font-size:.98rem;
+  position:relative;
+}
+blockquote .src{display:block;margin-top:.9rem;font-size:.82rem;color:var(--gris);text-transform:uppercase;letter-spacing:.08em}
+.nuit blockquote{background:#221E14;border-color:#3A362B}
+
+/* ---------- réquisitoire / fin ---------- */
+.requisitoire h2{font-size:clamp(2.2rem,7vw,4.6rem)}
+footer{
+  border-top:2px solid var(--encre);
+  padding:3rem 0 4rem;
+  font-size:.92rem;
+}
+footer h3{
+  font-family:"Courier Prime",monospace;text-transform:uppercase;
+  letter-spacing:.1em;font-size:.9rem;margin-bottom:1.2rem;
+}
+footer ul{list-style:none}
+footer li{
+  font-family:"Courier Prime",monospace;font-size:.85rem;
+  color:var(--gris);padding:.35rem 0;border-bottom:1px dotted var(--ligne);
+}
+.avertissement{
+  font-family:"Courier Prime",monospace;font-size:.85rem;color:var(--gris);
+  border:1px dashed var(--gris);padding:1rem 1.2rem;margin-top:2.5rem;
+}
+
+/* ---------- reveals ---------- */
+.fade{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.fade.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .fade{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="col">
+    <p class="kicker">DOSSIER D'INSTRUCTION CITOYENNE — <b>PIÈCES À CONVICTION</b> — ÉTAT AU 19.07.2026 — DIFFUSION LIBRE</p>
+    <h1>L'État vous oblige<br>à obéir.<br><span class="rouge">Lui, n'obéit plus.</span></h1>
+    <p class="hero-sub">
+      Vous payez vos amendes. Vous répondez aux recommandés. Vous vous présentez aux convocations.
+      Pendant ce temps, l'État belge accumule les condamnations de ses propres tribunaux — et les ignore.
+      Ceci n'est pas une opinion. C'est un inventaire. Chaque chiffre est sourcé.
+    </p>
+    <p style="margin-top:2.6rem"><span class="stamp big reveal">Non exécuté</span></p>
+    <p class="hero-meta">
+      <span>PIÈCES : 7</span><span>JUGEMENTS IGNORÉS : ~10 000</span><span>ASTREINTES IMPAYÉES : &gt; 170 M€</span><span>CONFIANCE DANS LES PARTIS : 8 %</span>
+    </p>
+  </div>
+</header>
+
+<!-- ================= PIÈCE 1 ================= -->
+<section id="piece1">
+  <div class="col fade">
+    <div class="piece-head"><span><b>PIÈCE N° 1</b> — LA CARENCE</span><span>CEDH, CAMARA C. BELGIQUE, 18.07.2023</span></div>
+    <h2>Dix mille jugements. Zéro exécution.</h2>
+    <p>
+      Depuis janvier 2022, l'Institut fédéral des droits humains a documenté <strong>près de 10 000 jugements</strong>
+      condamnant l'État belge qui n'ont pas été exécutés. Les tribunaux du travail de Bruxelles ont prononcé
+      <strong>plus de 8 000 condamnations</strong> contre Fedasil pour refus d'héberger des demandeurs d'asile,
+      assorties d'astreintes cumulées dépassant <strong>170 millions d'euros</strong>. Jamais payées.
+    </p>
+    <p>
+      La Cour européenne des droits de l'homme a mis un mot sur ce comportement dans l'arrêt
+      <em>Camara c. Belgique</em> : une <strong>« carence systémique des autorités belges d'exécuter les
+      décisions de justice définitives »</strong>. Depuis, plus de <strong>2 200 mesures provisoires</strong> ont dû
+      être imposées à la Belgique. Le 9 avril 2026, nouvelle condamnation (<em>M.V. et autres c. Belgique</em>) :
+      la Cour constate que les astreintes <em>« n'ont toujours pas été payées à ce jour »</em>.
+    </p>
+    <blockquote>
+      « Que vaut une décision de justice si elle n'est pas mise en œuvre ? »
+      <span class="src">Martien Schotsmans, directrice de l'Institut fédéral des droits humains, 18.11.2024</span>
+    </blockquote>
+    <p>
+      En 2025, le Conseil d'État <strong>néerlandais</strong> a refusé de renvoyer des demandeurs d'asile vers la Belgique,
+      qualifiant l'attitude des autorités belges d'<strong>« indifférence »</strong> et leur mépris des jugements de
+      <strong>« structurel »</strong>. Retenez ce détail : un pays voisin considère officiellement que la Belgique
+      ne respecte pas ses propres tribunaux.
+    </p>
+    <div class="annotation">Art. 40 de la Constitution : « Les arrêts et jugements sont exécutés au nom du Roi. »
+    L'exécutif a le devoir constitutionnel d'exécuter. Il ne le fait pas. C'est écrit. C'est violé.</div>
+  </div>
+</section>
+
+<!-- ================= MUR DES JUGEMENTS ================= -->
+<section class="mur" id="mur">
+  <div class="fade">
+    <h2>Le mur des jugements ignorés</h2>
+    <p class="intro-mur">
+      Dix mille, c'est abstrait. Alors voici dix mille traits. <strong>Chaque trait ci-dessous est un jugement
+      rendu par un tribunal belge, au nom du Roi, que l'État belge a décidé d'ignorer.</strong>
+      Prenez le temps de faire défiler. C'est long. C'est fait exprès.
+    </p>
+    <canvas id="tally" aria-label="Dix mille traits de comptage, un par jugement non exécuté par l'État belge" role="img"></canvas>
+    <p class="legend">Source : enquête de l'Institut fédéral des droits humains ouverte le 18.11.2024 — ~10 000 jugements non exécutés depuis janvier 2022.</p>
+  </div>
+</section>
+
+<!-- ================= COMPTEUR ================= -->
+<div class="compteur-wrap" id="compteur-sec">
+  <div class="col fade">
+    <p class="titre">La dette que l'État se doit d'ignorer</p>
+    <p class="compteur" id="compteur">278 500 000 €</p>
+    <p class="cap">
+      Montant théorique des astreintes dues par Fedasil, reconnu par la secrétaire d'État à l'Asile en mars 2023 :
+      278,5 millions d'euros, augmentant alors de 10 000 € par jour. Ce compteur tourne, à titre d'illustration,
+      au rythme officiellement admis à l'époque. L'État conteste devoir payer. Les tribunaux disent le contraire.
+      Devinez qui gagne.
+    </p>
+  </div>
+</div>
+
+<!-- ================= PIÈCE 2 : PRISONS ================= -->
+<section class="nuit" id="piece2">
+  <div class="col fade">
+    <div class="piece-head"><span><b>PIÈCE N° 2</b> — LES CORPS AU SOL</span><span>CEDH, VASILESCU C. BELGIQUE, 25.11.2014</span></div>
+    <h2>Douze ans après l'arrêt pilote, des hommes dorment par terre.</h2>
+    <p>
+      En 2014, la Cour européenne identifiait un problème <strong>« structurel »</strong> de surpopulation carcérale
+      en Belgique. Douze ans plus tard, non seulement rien n'est réglé : tout s'est aggravé.
+    </p>
+    <div class="numrow">
+      <span class="bignum" data-count="763">763</span>
+      <span class="bignum-label">détenus dormant sur un matelas au sol (CCSP, avril 2026)</span>
+    </div>
+    <p>
+      13 500 détenus pour environ 11 000 places. Taux d'occupation : <strong>124 %</strong>, jusqu'à 130 % dans
+      certains établissements. Quatrième pire pays d'Europe. Plus de <strong>1 089 personnes internées</strong> —
+      des malades psychiatriques — maintenues en prison sans soins appropriés, malgré des condamnations répétées
+      pour <strong>traitements inhumains et dégradants</strong> (article 3 de la Convention : celui qui interdit la torture).
+    </p>
+    <p>
+      Les cours d'appel de Liège, Bruxelles et Mons ont condamné l'État sous astreinte pouvant atteindre
+      <strong>4 000 € par jour et par détenu excédentaire</strong>. Astreintes cumulées dans ce seul domaine :
+      environ <strong>300 millions d'euros</strong> (mars 2026). Réponse du gouvernement : envisager de
+      <strong>délocaliser des détenus en Estonie ou au Kosovo</strong>. Pas de construire un État qui respecte
+      ses juges. Externaliser le problème.
+    </p>
+    <blockquote>
+      Le Comité des Ministres du Conseil de l'Europe exprime sa « profonde inquiétude » face à un nombre de détenus
+      atteignant un « niveau sans précédent ».
+      <span class="src">Décision du 05.12.2024 — surveillance de l'exécution des arrêts</span>
+    </blockquote>
+    <p style="margin-top:2rem"><span class="stamp big reveal">Traitement inhumain</span></p>
+  </div>
+</section>
+
+<!-- ================= PIÈCE 3 ================= -->
+<section id="piece3">
+  <div class="col fade">
+    <div class="piece-head"><span><b>PIÈCE N° 3</b> — LA RUE ORGANISÉE</span><span>LOI DU 07.2025, « STATUT M »</span></div>
+    <h2>Quand la loi elle-même devient l'arme du contournement.</h2>
+    <p>
+      Nouveauté 2025 : au lieu d'exécuter les jugements, l'État <strong>change la loi pour légaliser leur non-exécution</strong>.
+      Une loi de juillet 2025 permet de refuser l'hébergement à des personnes déjà protégées ailleurs en Europe :
+      <strong>plus de 3 200 personnes</strong> mises à la rue d'un trait de plume. Le Conseil d'État a suspendu la mesure,
+      au motif qu'elle <em>« expose immédiatement les personnes concernées au risque de dénuement complet »</em>.
+    </p>
+    <p>
+      En octobre 2025, quatre familles ont déposé une <strong>plainte pénale contre la ministre de l'Asile</strong>
+      pour traitements inhumains et non-assistance à personne en danger. La réaction du pouvoir a provoqué un fait
+      <strong>sans précédent dans l'histoire du pays</strong> : la Cour de cassation, le Collège des procureurs généraux
+      et le Collège des cours et tribunaux — la magistrature belge au complet — ont publié un communiqué commun
+      dénonçant <strong>« une atteinte à la séparation des pouvoirs »</strong>.
+    </p>
+    <blockquote>
+      Le procureur général de Bruxelles qualifie le refus ministériel d'« attaque frontale contre la séparation des pouvoirs ».
+      En avril 2026, 500 travailleurs de Fedasil se désolidarisent publiquement des « violations quotidiennes de l'État
+      de droit et de la dignité humaine ».
+      <span class="src">Communiqués publics, octobre 2025 — avril 2026</span>
+    </blockquote>
+    <div class="annotation">Quand les juges, les procureurs et les fonctionnaires de l'État dénoncent l'État,
+    ce n'est plus de la polémique. C'est un signalement interne de la machine elle-même.</div>
+  </div>
+</section>
+
+<!-- ================= PIÈCE 4 ================= -->
+<section id="piece4" style="background:var(--papier-sombre)">
+  <div class="col fade">
+    <div class="piece-head"><span><b>PIÈCE N° 4</b> — LA CAISSE</span><span>LOI DU 04.07.1989 — GRECO, 5e CYCLE</span></div>
+    <h2>Pendant ce temps, la caisse des partis ne rate jamais un versement.</h2>
+    <p>
+      L'État qui « ne peut pas » payer ses astreintes verse chaque année, automatiquement, indexé,
+      <strong>75 millions d'euros de dotations publiques aux partis politiques</strong> — environ 80 % de leurs recettes.
+      Patrimoine cumulé des partis : <strong>156,8 millions d'euros</strong>, triplé en vingt ans.
+      En 2024, année électorale, <strong>15 millions d'euros</strong> de cette manne publique sont partis en
+      publicité sur Meta et Google.
+    </p>
+    <p>
+      Qui contrôle cet argent ? Une commission <strong>composée de parlementaires des partis qu'elle contrôle</strong>.
+      Les relevés de dons sont conservés dans des boîtes étiquetées « secret » dans une pièce du Parlement.
+      Aucun nom de donateur n'est public. Le patrimoine des élus ? Déclaré sous pli fermé, <strong>détruit après cinq ans</strong>,
+      consultable uniquement par un juge d'instruction.
+    </p>
+    <p>
+      L'organe anticorruption du Conseil de l'Europe (GRECO) a placé la Belgique sous procédure de
+      <strong>non-conformité</strong> : lettre du Secrétaire général au ministre des Affaires étrangères —
+      l'avant-dernier palier avant la déclaration publique de non-conformité, une mesure prononcée
+      <strong>une seule fois dans l'histoire : contre la Biélorussie</strong>. Échéance pour la Belgique :
+      <strong>30 novembre 2026</strong>. Un panel de 60 citoyens tirés au sort a remis 34 recommandations
+      de réforme en 2023. Le Parlement les a intégralement ignorées.
+    </p>
+    <p style="margin-top:2rem"><span class="stamp big reveal">Sans suite</span></p>
+  </div>
+</section>
+
+<!-- ================= PIÈCE 5 ================= -->
+<section id="piece5">
+  <div class="col fade">
+    <div class="piece-head"><span><b>PIÈCE N° 5</b> — LES INVISIBLES</span><span>ÉTUDES FÉDÉRALES TAKE / BELMOD</span></div>
+    <h2>Le guichet marche très bien. Dans un seul sens.</h2>
+    <p>
+      L'État sait verser 75 millions aux partis sans qu'ils remplissent un formulaire.
+      Mais quand c'est vous qui avez des droits, le guichet se transforme en labyrinthe.
+      Les études fédérales elles-mêmes chiffrent l'abandon :
+    </p>
+    <div class="numrow">
+      <span class="bignum">37–51 %</span>
+      <span class="bignum-label">des personnes éligibles au revenu d'intégration ne le touchent pas</span>
+    </div>
+    <div class="numrow">
+      <span class="bignum">50 %</span>
+      <span class="bignum-label">des aînés pauvres éligibles à la GRAPA n'y accèdent pas</span>
+    </div>
+    <div class="numrow">
+      <span class="bignum">77 %</span>
+      <span class="bignum-label">des plus de 65 ans éligibles à l'allocation de chauffage sont laissés de côté</span>
+    </div>
+    <p>
+      On appelle ça, pudiquement, le « non-recours ». Traduction : des <strong>milliards d'euros de droits légaux
+      jamais versés</strong> — des économies silencieuses réalisées sur les plus pauvres. Et pendant que ces milliards
+      dorment, l'État déploie contrôleurs, croisements de fichiers et compteurs d'eau pour traquer la fraude sociale.
+      Comparez vous-même :
+    </p>
+    <div class="vs">
+      <div>
+        <p class="vs-head">Fraude sociale détectée</p>
+        <p class="vs-num r">0,3 %</p>
+        <p class="vs-cap">du budget de la sécurité sociale. Contrôles massifs, discours martiaux, visites domiciliaires.</p>
+      </div>
+      <div>
+        <p class="vs-head">Droits non versés (RIS seul)</p>
+        <p class="vs-num g">jusqu'à 51 %</p>
+        <p class="vs-cap">des ayants droit. Aucune task-force. Aucun plan d'urgence. Aucun ministre ne démissionne.</p>
+      </div>
+    </div>
+    <p>
+      Ajoutez la réforme Arizona : limitation du chômage à 24 mois, entre <strong>100 000 et 328 000 personnes</strong>
+      concernées dès 2026. À Bruxelles, <strong>42 % des jeunes exclus du chômage n'ouvriront aucun droit au CPAS</strong>.
+      Lors d'une vague d'exclusions précédente, <strong>72,2 % des exclus avaient simplement « disparu des radars »</strong> —
+      ni chômage, ni CPAS, ni statistique. Volatilisés. C'est ça, le pire : pas un scandale qui explose,
+      mais des gens qui s'effacent.
+    </p>
+  </div>
+</section>
+
+<!-- ================= PIÈCE 6 ================= -->
+<section class="nuit" id="piece6">
+  <div class="col fade">
+    <div class="piece-head"><span><b>PIÈCE N° 6</b> — LA MACHINE QUI REND MALADE</span><span>SCIENSANO / IWEPS / LITTÉRATURE CLINIQUE</span></div>
+    <h2>Ce système ne néglige pas les gens. Il les abîme.</h2>
+    <p>
+      La recherche clinique a un nom pour ce que vivent les allocataires belges : <strong>violence institutionnelle</strong>.
+      Recommandés qui menacent, médecins-conseils qui interrogent, formulaires qui piègent, statuts qu'il faut
+      re-prouver sans fin. Le Conseil d'État parlait déjà, il y a dix ans, d'<strong>« arbitraire institutionnalisé »</strong>.
+    </p>
+    <p>
+      Les effets sont mesurés. Le sentiment d'être piégé dans les procédures <strong>multiplie par trois</strong>
+      la probabilité de troubles anxieux ou de dépression sévère. La méfiance envers des institutions perçues comme
+      punitives <strong>majore de 50 %</strong> le risque dépressif. Sciensano documente l'érosion de la santé mentale,
+      la montée des idéations suicidaires chez les jeunes et les ménages les moins scolarisés.
+      <strong>18,7 % de la population</strong> est en risque de pauvreté ou d'exclusion — jusqu'à 25 % à Bruxelles.
+    </p>
+    <p>
+      Et la neuroscience enfonce le clou : la survie administrative sature la mémoire de travail, détruit les fonctions
+      exécutives, fabrique l'épuisement qui empêche précisément de faire valoir ses droits. La machine produit
+      elle-même l'incapacité qu'elle sanctionne ensuite. Un rapporteur spécial des Nations unies a utilisé le mot :
+      <strong>« maltraitances institutionnelles »</strong>.
+    </p>
+    <div class="annotation">Résumé de la boucle : l'État complexifie l'accès → les gens décrochent → l'État économise
+    → les gens tombent malades → l'État les contrôle davantage. Ce n'est pas un bug. C'est le fonctionnement.</div>
+  </div>
+</section>
+
+<!-- ================= PIÈCE 7 ================= -->
+<section id="piece7">
+  <div class="col fade">
+    <div class="piece-head"><span><b>PIÈCE N° 7</b> — LE VERROU</span><span>CONSTITUTION, ART. 33 &amp; 42</span></div>
+    <h2>Pourquoi rien ne change : personne n'est puni, parce que personne n'est responsable.</h2>
+    <p>
+      Toutes les pièces précédentes posent la même question : comment un État démocratique peut-il ignorer
+      dix mille jugements sans qu'un seul responsable tombe ? Réponse : parce que la responsabilité a été dissoute.
+      Votre député ne répond pas devant vous — il répond devant son parti, qui a composé la liste, distribué
+      les places et impose la discipline de vote. La Constitution promet un mandat libre (art. 42) ;
+      la réalité livre une <strong>particratie</strong> où les décisions se prennent hors des assemblées,
+      entre présidents de partis que personne n'a élus à cette fonction.
+    </p>
+    <p>
+      Les partis contrôlent leur propre financement, leur propre commission de contrôle, les nominations dans
+      l'administration, la magistrature de nomination politique, les cabinets ministériels — environ
+      <strong>3 000 collaborateurs recrutés sans concours pour plus de 200 millions d'euros par an</strong>,
+      dont la moitié invisible dans les budgets. Le circuit est fermé. Et les citoyens l'ont compris :
+    </p>
+    <div class="numrow">
+      <span class="bignum">8 %</span>
+      <span class="bignum-label">de confiance dans les partis politiques. Huit. Pour cent.</span>
+    </div>
+    <p>
+      Deux tiers des Belges estiment la corruption répandue. Le vote reste obligatoire — vous êtes le seul maillon
+      de la chaîne qui risque une sanction en cas de manquement. Relisez cette phrase.
+    </p>
+    <p style="margin-top:2rem"><span class="stamp big reveal">Classé sans responsable</span></p>
+  </div>
+</section>
+
+<!-- ================= RÉQUISITOIRE ================= -->
+<section class="requisitoire" style="background:var(--papier-sombre);border-top:2px solid var(--encre)">
+  <div class="col fade">
+    <div class="piece-head"><span><b>RÉQUISITOIRE</b></span><span>À L'ATTENTION DE QUICONQUE LIT ENCORE</span></div>
+    <h2>Ceci n'est pas une dictature.<br>C'est pire à prouver.</h2>
+    <p>
+      Une dictature se voit. Ici, tout a l'air en ordre : élections libres, presse libre, tribunaux indépendants.
+      Et c'est justement la pièce maîtresse du dossier : <strong>les tribunaux fonctionnent, condamnent — et l'État
+      n'obéit pas.</strong> Une démocratie où les jugements sont facultatifs pour le pouvoir n'est pas une démocratie
+      malade. C'est une démocratie de façade, avec un étage noble pour les visites et un étage réel où l'on décide
+      qui dort au sol, qui disparaît des radars et qui touche la dotation.
+    </p>
+    <p>
+      La honte, elle, est déjà internationale : constat de « carence systémique » à Strasbourg, refus de transferts
+      par les Pays-Bas, « profonde inquiétude » du Comité des Ministres, procédure de non-conformité GRECO au palier
+      biélorusse moins un. <strong>Le 30 novembre 2026</strong>, la Belgique doit rendre des comptes au Conseil de
+      l'Europe. Retenez la date. Parlez-en avant. Exigez qu'on en parle.
+    </p>
+    <p>
+      Et surtout, refusez le piège du fatalisme : chaque chiffre de ce dossier provient d'institutions qui font
+      leur travail — juges, Cour des comptes, chercheurs, GRECO, journalistes. Les contre-pouvoirs existent.
+      Il leur manque une seule chose : que nous nous en servions.
+    </p>
+  </div>
+</section>
+
+<!-- ================= SOURCES ================= -->
+<footer>
+  <div class="col">
+    <h3>Pièces au dossier (sources primaires)</h3>
+    <ul>
+      <li>CEDH, Camara c. Belgique, req. 49255/22, arrêt du 18.07.2023, § 118 — « carence systémique »</li>
+      <li>CEDH, Vasilescu c. Belgique, 25.11.2014 — arrêt pilote surpopulation carcérale</li>
+      <li>CEDH, M.V. et autres c. Belgique, 09.04.2026 — astreintes toujours impayées</li>
+      <li>Institut fédéral des droits humains — enquête sur la non-exécution des décisions de justice (18.11.2024) ; rapports État de droit 2024-2025</li>
+      <li>Conseil central de surveillance pénitentiaire (CCSP) — relevés 2025-2026 ; Comité des Ministres du Conseil de l'Europe, décision du 05.12.2024</li>
+      <li>GRECO, 5e cycle : rapport 06.12.2019, addendum au 2e rapport de conformité (12.12.2025) ; Règle 32, escalade §2.ii.c, échéance 30.11.2026</li>
+      <li>Loi du 04.07.1989 sur le financement des partis ; Questure de la Chambre (dotations) ; enquête Follow the Money / VSquare (2024)</li>
+      <li>Études fédérales TAKE et BELMOD — non-recours au RIS, à la GRAPA, à l'allocation de chauffage</li>
+      <li>Cour des comptes — audits cabinets ministériels (2011-2023) ; Fédération des CPAS wallons ; ONEm — réforme chômage 2026</li>
+      <li>Sciensano, IWEPS, Eurostat — santé mentale, pauvreté ; Eurobaromètre 2024 — perception de la corruption</li>
+      <li>Communiqué commun Cour de cassation / Collège des procureurs généraux / Collège des cours et tribunaux (octobre 2025)</li>
+    </ul>
+    <p class="avertissement">
+      NOTE DE MÉTHODE — Ce document agrège des données publiques et vérifiables. Les personnes citées dans des
+      procédures en cours bénéficient de la présomption d'innocence. Les jugements de valeur sont signalés comme tels.
+      La colère est dans les faits, pas dans les adjectifs. Dossier complet, études thématiques et voies de recours :
+      <a href="https://github.com/ouaisfieu/carte-blanche/">github.com/ouaisfieu/carte-blanche</a>.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- reveals (fade + stamps) ---------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.18});
+  document.querySelectorAll('.fade,.stamp.reveal').forEach(function(el){ io.observe(el); });
+
+  /* ---------- compteur astreintes ---------- */
+  var BASE = 278500000;            // reconnu en mars 2023
+  var RATE = 10000/86400;          // €/seconde au rythme admis (+10 000 €/jour)
+  var el = document.getElementById('compteur');
+  var t0 = null, started = false;
+  function fmt(n){
+    return Math.floor(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f') + ' \u20ac';
+  }
+  function tick(ts){
+    if(t0===null) t0 = ts;
+    var val = BASE + ((ts - t0)/1000)*RATE;
+    el.textContent = fmt(val);
+    requestAnimationFrame(tick);
+  }
+  var ioC = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !started){
+        started = true;
+        if(reduced){ el.textContent = fmt(BASE); }
+        else{ requestAnimationFrame(tick); }
+        ioC.disconnect();
+      }
+    });
+  },{threshold:0.3});
+  ioC.observe(document.getElementById('compteur-sec'));
+
+  /* ---------- mur : 10 000 traits ---------- */
+  var canvas = document.getElementById('tally');
+  var TOTAL = 10000, PER_GROUP = 5;
+  var GROUPS = TOTAL / PER_GROUP; // 2000
+  var drawn = 0, layout = null, ctx = null, animating = false;
+
+  function computeLayout(){
+    var cssW = Math.min(1100, window.innerWidth * 0.94);
+    var gw = 30, gh = 40, padX = 6, padY = 10;
+    var cols = Math.max(4, Math.floor((cssW - padX*2) / gw));
+    var rows = Math.ceil(GROUPS / cols);
+    var cssH = rows * gh + padY*2;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width  = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    canvas.style.height = cssH + 'px';
+    ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,cssW,cssH);
+    ctx.strokeStyle = '#16130C';
+    ctx.lineWidth = 1.6;
+    ctx.lineCap = 'round';
+    layout = {cols:cols, gw:gw, gh:gh, padX:padX, padY:padY};
+  }
+
+  // jitter déterministe (l'aspect "compté à la main")
+  function j(seed){ var x = Math.sin(seed*127.1)*43758.5453; return (x - Math.floor(x)) - 0.5; }
+
+  function drawGroup(i){
+    var c = i % layout.cols, r = Math.floor(i / layout.cols);
+    var x0 = layout.padX + c*layout.gw;
+    var y0 = layout.padY + r*layout.gh + 6;
+    var h = 22;
+    ctx.beginPath();
+    for(var s=0;s<4;s++){
+      var x = x0 + 4 + s*5 + j(i*10+s)*1.4;
+      ctx.moveTo(x + j(i*10+s+4)*1.2, y0 + j(i*10+s+8)*1.5);
+      ctx.lineTo(x + j(i*10+s+12)*1.4, y0 + h + j(i*10+s+16)*1.5);
+    }
+    // la barre diagonale du cinquième
+    ctx.moveTo(x0 + 1 + j(i*10+20), y0 + h - 2 + j(i*10+21));
+    ctx.lineTo(x0 + 22 + j(i*10+22), y0 + 2 + j(i*10+23));
+    ctx.stroke();
+  }
+
+  function drawAll(){
+    for(var i=0;i<GROUPS;i++) drawGroup(i);
+    drawn = GROUPS;
+  }
+
+  function animate(){
+    if(animating) return; animating = true;
+    var BATCH = 24;
+    (function step(){
+      var end = Math.min(drawn + BATCH, GROUPS);
+      for(var i=drawn;i<end;i++) drawGroup(i);
+      drawn = end;
+      if(drawn < GROUPS) requestAnimationFrame(step);
+    })();
+  }
+
+  computeLayout();
+  var ioT = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        if(reduced) drawAll(); else animate();
+        ioT.disconnect();
+      }
+    });
+  },{threshold:0.05});
+  ioT.observe(canvas);
+
+  var rT;
+  window.addEventListener('resize', function(){
+    clearTimeout(rT);
+    rT = setTimeout(function(){
+      var wasDone = drawn > 0;
+      drawn = 0; animating = false;
+      computeLayout();
+      if(wasDone) drawAll();
+    }, 200);
+  });
+})();
+</script>
+</body>
+</html>
